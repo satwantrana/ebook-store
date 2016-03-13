@@ -8,7 +8,7 @@
 struct BookDataStore bookDataStore;
 
 int* getRecommendations(struct Review reviews[], int num) {
-    int ret[maxReturnSize];
+    static int ret[maxReturnSize];
     return ret;
 };
 

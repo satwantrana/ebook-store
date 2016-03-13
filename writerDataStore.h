@@ -1,10 +1,17 @@
 #ifndef WRITERDATASTORE_H_INCLUDED
 #define WRITERDATASTORE_H_INCLUDED
 
-#include "dataStoreStructs.h"
+#include "globalVars.h"
+#include "writer.h"
 
-void addWriterToDataStore(struct Writer b);
-void removeBookFromDataStore(int bookID);
-Book* searchBooksInDataStore(bool byBookName, char name[], int count);
+struct WriterDataStore {
+    int size;
+    struct Writer writers[maxDataStoreSize];
+    int taken[maxDataStoreSize];
+};
+
+void addWriterToDataStore(struct Writer b, struct WriterDataStore writerDataStore);
+void removeWriterFromDataStore(int writerID, struct WriterDataStore writerDataStore);
+struct Writer* searchWritersInDataStore(char name[], int count, struct WriterDataStore writerDataStore);
 
 #endif

@@ -1,7 +1,14 @@
 #ifndef BOOKDATASTORE_H_INCLUDED
 #define BOOKDATASTORE_H_INCLUDED
 
-#include "dataStoreStructs.h"
+#include "globalVars.h"
+#include "book.h"
+
+struct BookDataStore {
+    int size;
+    struct Book books[maxDataStoreSize];
+    int taken[maxDataStoreSize];
+};
 
 void initBookDataStore(struct BookDataStore bookDataStore);
 void addBookToDataStore(struct Book b, struct BookDataStore bookDataStore);

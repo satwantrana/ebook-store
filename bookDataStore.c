@@ -1,3 +1,5 @@
+#include <string.h>
+
 #include "bookDataStore.h"
 
 void initBookDataStore(struct BookDataStore bookDataStore){
@@ -17,12 +19,11 @@ void removeBookFromDataStore(int bookID, struct BookDataStore bookDataStore){
     bookDataStore.taken[bookID] = 0;
 }
 
-const int maxReturnSize = 10;
 struct Book* searchBooksInDataStore(int byBookName, char name[], int count, struct BookDataStore bookDataStore){
-    Book books[maxReturnSize]; int sz = 0;
+    static struct Book books[maxReturnSize]; int sz = 0;
     for(int i=0;i<bookDataStore.size && sz<count;i++){
-        if((byBookName && bookDataStore[i].title == name) ||
-                (!byBookName && bookDataStore[i].author == name)) books[sz++] = bookDataStore[i];
+        if((byBookName && bookDataStore.books[i].title == name) ||
+                (!byBookName && bookDataStore.books[i].author == name)) books[sz++] = bookDataStore.books[i];
     }
     return books;
 }
