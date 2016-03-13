@@ -1,1 +1,1 @@
-gcc code.c admin.c book.c bookDataStore.c customer.c globalVars.c review.c writer.c writerDataStore.c
+gcc code.c admin.c book.c bookDataStore.c customer.c customerDataStore.c globalVars.c review.c writer.c writerDataStore.c

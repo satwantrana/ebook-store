@@ -16,7 +16,7 @@ void displayRecommendations(int bookids[], int num) {
 };
 
 void initEverything(){
-    initBookDataStore(bookDataStore);
+    bookDataStore = newBookDataStore(bookDataStore);
 }
 
 int main() {

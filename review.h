@@ -2,10 +2,11 @@
 #define REVIEW_H_INCLUDED
 
 struct Review {
-  char customerName;
-  int id;
+  int customerID;
   int rating; // out of 5
-  char review[1000];
+  char body[1000];
 };
+
+struct Review newReview(char customerID, int rating, char body[]);
 
 #endif

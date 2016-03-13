@@ -2,12 +2,15 @@
 
 #include "bookDataStore.h"
 
-void initBookDataStore(struct BookDataStore bookDataStore){
+struct BookDataStore newBookDataStore(){
+    struct BookDataStore bookDataStore;
     bookDataStore.size = 0;
     memset(bookDataStore.taken,0,sizeof bookDataStore.taken);
+    return bookDataStore;
 }
 
 void addBookToDataStore(struct Book b, struct BookDataStore bookDataStore){
+    assignSimilarBooksFromDataStore(&b, bookDataStore);
     for(int i=0;i<bookDataStore.size;i++) if(!bookDataStore.taken[i]){
         b.id = i;
         break;
@@ -22,8 +25,24 @@ void removeBookFromDataStore(int bookID, struct BookDataStore bookDataStore){
 struct Book* searchBooksInDataStore(int byBookName, char name[], int count, struct BookDataStore bookDataStore){
     static struct Book books[maxReturnSize]; int sz = 0;
     for(int i=0;i<bookDataStore.size && sz<count;i++){
-        if((byBookName && bookDataStore.books[i].title == name) ||
-                (!byBookName && bookDataStore.books[i].author == name)) books[sz++] = bookDataStore.books[i];
+        if(bookDataStore.books[i].authorized &&
+            ((byBookName && bookDataStore.books[i].title == name) ||
+                (!byBookName && bookDataStore.books[i].author == name)))
+                    books[sz++] = bookDataStore.books[i];
     }
     return books;
+}
+
+void assignSimilarBooksFromDataStore(struct Book *b, struct BookDataStore bookDataStore){
+    int sz = 0;
+    for(int i=0;i<bookDataStore.size && sz<3;i++){
+        if(bookDataStore.taken[i] && bookDataStore.books[i].writerID == b->writerID)
+            b->similarBooks[sz++] = bookDataStore.books[i].id;
+    }
+    b->similarBookCount = sz;
+}
+
+void authorizeBooksInDataStore(struct Admin admin, struct BookDataStore bookDataStore){
+    for(int i=0;i<bookDataStore.size;i++)
+        if(!bookDataStore.books[i].authorized) bookDataStore.books[i].authorized = 1;
 }

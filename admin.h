@@ -6,4 +6,6 @@ struct Admin {
   char password[8];
 };
 
+struct Admin newAdmin(char username[], char password[]);
+
 #endif

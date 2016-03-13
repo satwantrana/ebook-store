@@ -10,6 +10,7 @@ struct WriterDataStore {
     int taken[maxDataStoreSize];
 };
 
+struct WriterDataStore newWriterDataStore();
 void addWriterToDataStore(struct Writer b, struct WriterDataStore writerDataStore);
 void removeWriterFromDataStore(int writerID, struct WriterDataStore writerDataStore);
 struct Writer* searchWritersInDataStore(char name[], int count, struct WriterDataStore writerDataStore);

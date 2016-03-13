@@ -10,4 +10,6 @@ struct Writer {
    char password[8];
 };
 
+struct Writer newWriter(char name[], char username[], char password[]);
+
 #endif
