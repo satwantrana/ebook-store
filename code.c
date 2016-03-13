@@ -1,11 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "book.h"
-#include "bookDataStore.h"
-
-// Defining datastores
-struct BookDataStore bookDataStore;
+#include "eBookStore.h"
 
 int* getRecommendations(struct Review reviews[], int num) {
     static int ret[maxReturnSize];
@@ -16,9 +12,9 @@ void displayRecommendations(int bookids[], int num) {
 };
 
 void initEverything(){
-    bookDataStore = newBookDataStore(bookDataStore);
+    struct EBookStore eBookStore = newEBookStore();
 }
 
 int main() {
-  return 0;
+    return 0;
 }

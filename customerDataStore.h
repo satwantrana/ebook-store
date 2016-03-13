@@ -1,5 +1,5 @@
-#ifndef BOOKDATASTORE_H_INCLUDED
-#define BOOKDATASTORE_H_INCLUDED
+#ifndef CUSTOMERDATASTORE_H_INCLUDED
+#define CUSTOMERDATASTORE_H_INCLUDED
 
 #include "globalVars.h"
 #include "customer.h"

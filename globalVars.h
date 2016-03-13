@@ -4,4 +4,5 @@
 #define maxDataStoreSize 10000
 #define maxReturnSize 10
 
+int makeTransaction(int amount);
 #endif

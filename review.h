@@ -7,6 +7,6 @@ struct Review {
   char body[1000];
 };
 
-struct Review newReview(char customerID, int rating, char body[]);
+struct Review newReview(int customerID, int rating, char body[]);
 
 #endif

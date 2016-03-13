@@ -11,5 +11,5 @@ struct Writer {
 };
 
 struct Writer newWriter(char name[], char username[], char password[]);
-
+int getDues(struct Writer *writer);
 #endif

@@ -15,8 +15,8 @@ struct Book {
    int similarBookCount;
    int price; // in rupees
    struct Review reviews[10];
+   int reviewCount;
    int ratingSum;
-   int ratingCount;
 };
 
 struct Book newBook(char title[], char author[], char summary[], char content[], int writerID, int price);
