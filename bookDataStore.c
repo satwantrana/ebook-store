@@ -42,7 +42,7 @@ void assignSimilarBooksFromDataStore(struct Book *b, struct BookDataStore bookDa
     b->similarBookCount = sz;
 }
 
-void authorizeBooksInDataStore(struct Admin admin, struct BookDataStore bookDataStore){
+void authorizeBooksInDataStore(struct BookDataStore bookDataStore){
     for(int i=0;i<bookDataStore.size;i++)
         if(!bookDataStore.books[i].authorized) bookDataStore.books[i].authorized = 1;
 }
