@@ -2,7 +2,7 @@
 #define GLOBALVARS_H_INCLUDED
 
 #define maxDataStoreSize 10000
-#define maxReturnSize 10
+#define maxReturnSize 100
 
 int makeTransaction(int amount);
 #endif

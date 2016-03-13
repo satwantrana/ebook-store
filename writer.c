@@ -5,6 +5,7 @@
 
 struct Writer newWriter(char name[], char username[], char password[]){
     struct Writer writer;
+    writer.bookCount = 0;
     strcpy(name, writer.name);
     strcpy(username, writer.username);
     strcpy(password, writer.password);

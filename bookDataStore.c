@@ -10,7 +10,6 @@ struct BookDataStore newBookDataStore(){
 }
 
 void addBookToDataStore(struct Book b, struct BookDataStore bookDataStore){
-    assignSimilarBooksFromDataStore(&b, bookDataStore);
     for(int i=0;i<bookDataStore.size;i++) if(!bookDataStore.taken[i]){
         b.id = i;
         break;
@@ -31,13 +30,4 @@ struct Book* searchBooksInDataStore(int byBookName, char name[], int count, stru
                     books[sz++] = bookDataStore.books[i];
     }
     return books;
-}
-
-void assignSimilarBooksFromDataStore(struct Book *b, struct BookDataStore bookDataStore){
-    int sz = 0;
-    for(int i=0;i<bookDataStore.size && sz<3;i++){
-        if(bookDataStore.taken[i] && bookDataStore.books[i].writerID == b->writerID)
-            b->similarBooks[sz++] = bookDataStore.books[i].id;
-    }
-    b->similarBookCount = sz;
 }

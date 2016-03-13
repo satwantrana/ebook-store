@@ -14,5 +14,4 @@ struct BookDataStore newBookDataStore();
 void addBookToDataStore(struct Book b, struct BookDataStore bookDataStore);
 void removeBookFromDataStore(int bookID, struct BookDataStore bookDataStore);
 struct Book* searchBooksInDataStore(int byBookName, char name[], int count, struct BookDataStore bookDataStore);
-void assignSimilarBooksFromDataStore(struct Book *b, struct BookDataStore bookDataStore);
 #endif

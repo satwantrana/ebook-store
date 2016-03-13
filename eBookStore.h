@@ -15,6 +15,9 @@ struct EBookStore {
 
 struct EBookStore newEBookStore();
 struct Book buyBook(int bookID, int customerID, struct EBookStore eBookStore);
-void authorizeBooksInDataStore(struct Admin admin, struct BookDataStore bookDataStore);
+int authorizeBook(int bookID, struct EBookStore eBookStore);
+void assignSimilarBooks(int bookID, struct EBookStore eBookStore);
 void addReview(int bookID, int customerID, int rating, char review[], struct EBookStore eBookStore);
+int publishBook(char title[], char author[], char summary[], char content[], int writerID, int price, struct EBookStore eBookStore);
+struct Book* getBookRecommendations(int customerID, int count, struct EBookStore eBookStore);
 #endif

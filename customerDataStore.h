@@ -13,5 +13,4 @@ struct CustomerDataStore {
 struct CustomerDataStore newCustomerDataStore();
 void addCustomerToDataStore(struct Customer c, struct CustomerDataStore customerDataStore);
 void removeCustomerFromDataStore(int customerID, struct CustomerDataStore customerDataStore);
-
 #endif

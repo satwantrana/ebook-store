@@ -3,6 +3,7 @@
 
 struct Writer {
    char  name[50];
+   int bookCount;
    int  bookIDs[50];//ids of books authored
    int   id;
    double dues;
