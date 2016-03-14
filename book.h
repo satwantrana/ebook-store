@@ -1,25 +1,26 @@
 #ifndef BOOK_H_INCLUDED
 #define BOOK_H_INCLUDED
 
+#include "globalVars.h"
 #include "review.h"
 
 struct Book {
-   char title[50];
-   char author[50];
-   char summary[1000];
-   char content[1000];
+   char title[maxArraySize];
+   char author[maxArraySize];
+   char summary[maxArraySize];
+   char content[maxArraySize];
    int id;
    int writerID;
    int authorized;
-   int similarBooks[3];
+   int similarBooks[maxArraySize];
    int similarBookCount;
    int price; // in rupees
-   struct Review reviews[10];
+   struct Review* reviews[maxArraySize];
    int reviewCount;
    int ratingSum;
 };
 
 struct Book newBook(char title[], char author[], char summary[], char content[], int writerID, int price);
-double getAverageRating(struct Book b);
+double getAverageRating(struct Book *b);
 
 #endif

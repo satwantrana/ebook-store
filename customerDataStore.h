@@ -6,11 +6,11 @@
 
 struct CustomerDataStore {
     int size;
-    struct Customer customers[maxDataStoreSize];
-    int taken[maxDataStoreSize];
+    struct Customer* customers[maxArraySize];
+    int taken[maxArraySize];
 };
 
 struct CustomerDataStore newCustomerDataStore();
-void addCustomerToDataStore(struct Customer c, struct CustomerDataStore customerDataStore);
-void removeCustomerFromDataStore(int customerID, struct CustomerDataStore customerDataStore);
+void addCustomerToDataStore(struct Customer* c, struct CustomerDataStore *customerDataStore);
+void removeCustomerFromDataStore(struct Customer* c, struct CustomerDataStore *customerDataStore);
 #endif

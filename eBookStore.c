@@ -4,70 +4,63 @@
 
 struct EBookStore newEBookStore(){
     struct EBookStore eBookStore;
-    eBookStore.admin = newAdmin("admin", "admin");
+    eBookStore.admin = newAdmin("admin", "password");
     eBookStore.bookDataStore = newBookDataStore();
     eBookStore.customerDataStore = newCustomerDataStore();
     eBookStore.writerDataStore = newWriterDataStore();
     return eBookStore;
 }
 
-void assignSimilarBooks(int bookID, struct EBookStore eBookStore){
+void assignSimilarBooks(struct Book* b, struct EBookStore *eBookStore){
     int sz = 0;
-    struct Book *b = &eBookStore.bookDataStore.books[bookID];
-    for(int i=0;i<eBookStore.bookDataStore.size && sz<3;i++) if(i != bookID){
-        if(eBookStore.bookDataStore.taken[i] &&
-            eBookStore.bookDataStore.books[i].writerID == b->writerID &&
-                eBookStore.bookDataStore.books[i].authorized)
-             b->similarBooks[sz++] = eBookStore.bookDataStore.books[i].id;
-    }
+    for(int i=0;i<eBookStore->bookDataStore.size && sz<3;i++)
+        if(i != b->id && eBookStore->bookDataStore.taken[i] &&
+            eBookStore->bookDataStore.books[i]->writerID == b->writerID &&
+                eBookStore->bookDataStore.books[i]->authorized){
+                    b->similarBooks[sz++] = eBookStore->bookDataStore.books[i]->id;
+                }
     b->similarBookCount = sz;
 }
 
-int authorizeBook(int bookID, struct EBookStore eBookStore){
+int authorizeBook(struct Book *b, struct EBookStore *eBookStore){
     // Authorize all the books! :)
-    eBookStore.bookDataStore.books[bookID].authorized = 1;
+    b->authorized = 1;
     return 1;
 }
 
-int deAuthorizeBook(int bookID, struct EBookStore eBookStore){
+int deAuthorizeBook(struct Book* b, struct EBookStore *eBookStore){
     // Authorize all the books! :)
-    eBookStore.bookDataStore.books[bookID].authorized = 0;
+    b->authorized = 0;
     return 1;
 }
 
-int publishBook(char title[], char author[], char summary[], char content[], int writerID, int price, struct EBookStore eBookStore){
-    struct Book b = newBook(title, author, summary, content, writerID, price);
-    addBookToDataStore(b, eBookStore.bookDataStore);
-    assignSimilarBooks(b.id, eBookStore);
-    struct Writer *w = &eBookStore.writerDataStore.writers[writerID];
-    w->bookIDs[w->bookCount++] = b.id;
-    return authorizeBook(b.id, eBookStore);
+int publishBook(struct Book* b, struct EBookStore *eBookStore){
+    addBookToDataStore(b, &eBookStore->bookDataStore);
+    struct Writer *w = eBookStore->writerDataStore.writers[b->writerID];
+    w->bookIDs[w->bookCount++] = b->id;
+    return authorizeBook(b, eBookStore);
 }
 
-int dePublishBook(int bookID, struct EBookStore eBookStore) {
-    return deAuthorizeBook(bookID, eBookStore);
+int dePublishBook(struct Book *b, struct EBookStore *eBookStore) {
+    return deAuthorizeBook(b, eBookStore);
 }
 
-struct Book buyBook(int bookID, int customerID, struct EBookStore eBookStore){
-    struct Book *b = &eBookStore.bookDataStore.books[bookID];
+struct Book buyBook(struct Book *b, struct Customer *c, struct EBookStore *eBookStore){
     int bookPrice = b->price;
-    struct Customer *c = &eBookStore.customerDataStore.customers[customerID];
     if(!b->authorized || !getPayment(c, bookPrice)){
         b->id = -1;
     } else {
         c->bookIDs[c->bookCount++] = b->id;
-        struct Writer *w = &eBookStore.writerDataStore.writers[b->writerID];
+        struct Writer *w = eBookStore->writerDataStore.writers[b->writerID];
         w->dues += bookPrice;
     }
     return *b;
 }
 
-void addReview(int bookID, int customerID, int rating, char review[], struct EBookStore eBookStore){
-    struct Book *b = &eBookStore.bookDataStore.books[bookID];
-    struct Customer *c = &eBookStore.customerDataStore.customers[customerID];
-    struct Review r = newReview(customerID, bookID, rating, review);
-    c->reviews[c->reviewCount++] = r;
-    b->reviews[b->reviewCount++] = r;
+void addReview(struct Book *b, struct Customer *c, int rating, char review[], struct EBookStore *eBookStore){
+    struct Review r = newReview(c->id, b->id, rating, review);
+    c->reviews[c->reviewCount++] = &r;
+    b->reviews[b->reviewCount++] = &r;
     b->ratingSum += rating;
 }
 
@@ -75,20 +68,23 @@ int reviewCompareFunction(const void* a, const void* b){
     return (*(struct Review*)b).rating - (*(struct Review*)a).rating;
 }
 
-struct Book* getBookRecommendations(int customerID, int count, struct EBookStore eBookStore){
-    struct Review reviews[maxReturnSize];
-    struct Customer c = eBookStore.customerDataStore.customers[customerID];
-    for(int i=0;i<c.reviewCount;i++) reviews[i] = c.reviews[i];
-    qsort(reviews, c.reviewCount, sizeof reviews[0], reviewCompareFunction);
-    static struct Book ret[maxReturnSize];
+struct Book** getBookRecommendations(struct Customer *c, int count, struct EBookStore *eBookStore){
+    struct Review* reviews[maxArraySize];
+    for(int i=0;i<c->reviewCount;i++) reviews[i] = c->reviews[i];
+    qsort(reviews, c->reviewCount, sizeof reviews[0], reviewCompareFunction);
+    static struct Book* ret[maxArraySize];
     int j;
-    for(int i=0,j=0;i<c.reviewCount && j<count;i++){
-        struct Book b = eBookStore.bookDataStore.books[reviews[i].bookID];
-        if(b.authorized) for(int k=0;k<b.similarBookCount && j<count;k++){
-            struct Book bb = eBookStore.bookDataStore.books[b.similarBooks[j]];
-            if(bb.authorized) ret[j++] = bb;
+    for(int i=0,j=0;i<c->reviewCount && j<count;i++){
+        struct Book *b = eBookStore->bookDataStore.books[reviews[i]->bookID];
+        if(b->authorized) for(int k=0;k<b->similarBookCount && j<count;k++){
+            struct Book *bb = eBookStore->bookDataStore.books[b->similarBooks[j]];
+            if(bb->authorized) ret[j++] = bb;
         }
     }
-    ret[j].id = -1;
+    if(j<maxArraySize) ret[j]->id = -1;
     return ret;
+}
+
+void addWriter(struct Writer* w, struct EBookStore *eBookStore){
+    addWriterToDataStore(w, &eBookStore->writerDataStore);
 }

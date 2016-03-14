@@ -1,8 +1,10 @@
 #ifndef GLOBALVARS_H_INCLUDED
 #define GLOBALVARS_H_INCLUDED
 
-#define maxDataStoreSize 10000
-#define maxReturnSize 100
+#include <stdio.h>
+
+#define maxArraySize 50
+#define bool int
 
 int makeTransaction(int amount);
 #endif

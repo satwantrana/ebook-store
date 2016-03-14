@@ -1,14 +1,16 @@
 #ifndef WRITER_H_INCLUDED
 #define WRITER_H_INCLUDED
 
+#include "globalVars.h"
+
 struct Writer {
-   char  name[50];
+   char  name[maxArraySize];
    int bookCount;
-   int  bookIDs[50];//ids of books authored
+   int  bookIDs[maxArraySize];//ids of books authored
    int   id;
    double dues;
-   char username[50];
-   char password[8];
+   char username[maxArraySize];
+   char password[maxArraySize];
 };
 
 struct Writer newWriter(char name[], char username[], char password[]);

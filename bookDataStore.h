@@ -6,12 +6,12 @@
 
 struct BookDataStore {
     int size;
-    struct Book books[maxDataStoreSize];
-    int taken[maxDataStoreSize];
+    struct Book* books[maxArraySize];
+    int taken[maxArraySize];
 };
 
 struct BookDataStore newBookDataStore();
-void addBookToDataStore(struct Book b, struct BookDataStore bookDataStore);
-void removeBookFromDataStore(int bookID, struct BookDataStore bookDataStore);
-struct Book* searchBooksInDataStore(int byBookName, char name[], int count, struct BookDataStore bookDataStore);
+void addBookToDataStore(struct Book *b, struct BookDataStore *bookDataStore);
+void removeBookFromDataStore(struct Book* b, struct BookDataStore *bookDataStore);
+struct Book** searchBooksInDataStore(bool byBookName, char name[], int count, struct BookDataStore *bookDataStore);
 #endif

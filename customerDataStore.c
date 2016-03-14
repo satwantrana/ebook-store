@@ -9,14 +9,17 @@ struct CustomerDataStore newCustomerDataStore(){
     return customerDataStore;
 }
 
-void addCustomerToDataStore(struct Customer c, struct CustomerDataStore customerDataStore){
-    for(int i=0;i<customerDataStore.size;i++) if(!customerDataStore.taken[i]){
-        c.id = i;
+void addCustomerToDataStore(struct Customer *c, struct CustomerDataStore *customerDataStore){
+    for(int i=0;i<maxArraySize;i++) if(!customerDataStore->taken[i]){
+        c->id = i;
+        customerDataStore->customers[i] = c;
+        customerDataStore->taken[i] = 1;
+        customerDataStore->size++;
         break;
     }
-    customerDataStore.customers[c.id] = c;
 }
 
-void removeCustomerFromDataStore(int customerID, struct CustomerDataStore customerDataStore){
-    customerDataStore.taken[customerID] = 0;
+void removeCustomerFromDataStore(struct Customer* c, struct CustomerDataStore *customerDataStore){
+    customerDataStore->taken[c->id] = 0;
+    customerDataStore->size--;
 }

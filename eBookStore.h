@@ -14,10 +14,13 @@ struct EBookStore {
 };
 
 struct EBookStore newEBookStore();
-struct Book buyBook(int bookID, int customerID, struct EBookStore eBookStore);
-int authorizeBook(int bookID, struct EBookStore eBookStore);
-void assignSimilarBooks(int bookID, struct EBookStore eBookStore);
-void addReview(int bookID, int customerID, int rating, char review[], struct EBookStore eBookStore);
-int publishBook(char title[], char author[], char summary[], char content[], int writerID, int price, struct EBookStore eBookStore);
-struct Book* getBookRecommendations(int customerID, int count, struct EBookStore eBookStore);
+void addWriter(struct Writer* w, struct EBookStore *eBookStore);
+int publishBook(struct Book* b, struct EBookStore *eBookStore);
+
+void assignSimilarBooks(struct Book *b, struct EBookStore *eBookStore);
+int authorizeBook(struct Book *b, struct EBookStore *eBookStore);
+
+struct Book buyBook(struct Book *b, struct Customer *c, struct EBookStore *eBookStore);
+void addReview(struct Book *b, struct Customer *c, int rating, char review[], struct EBookStore *eBookStore);
+struct Book** getBookRecommendations(struct Customer *c, int count, struct EBookStore *eBookStore);
 #endif

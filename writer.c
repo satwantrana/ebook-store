@@ -5,10 +5,10 @@
 
 struct Writer newWriter(char name[], char username[], char password[]){
     struct Writer writer;
-    writer.bookCount = 0;
-    strcpy(name, writer.name);
-    strcpy(username, writer.username);
-    strcpy(password, writer.password);
+    writer.bookCount = 0; writer.id = -1; writer.dues= 0;
+    strcpy(writer.name, name);
+    strcpy(writer.username, username);
+    strcpy(writer.password, password);
     return writer;
 }
 

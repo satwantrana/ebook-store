@@ -6,12 +6,12 @@
 
 struct Customer {
   int  id;
-  char username[50];
-  char password[8];
+  char username[maxArraySize];
+  char password[maxArraySize];
   int bookCount;
-  int  bookIDs[100];// ids of books purchased
+  int  bookIDs[maxArraySize];// ids of books purchased
   int reviewCount;
-  struct Review reviews[100];
+  struct Review* reviews[maxArraySize];
 };
 
 struct Customer newCustomer(char username[], char password[]);

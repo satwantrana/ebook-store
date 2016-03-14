@@ -11,7 +11,7 @@ struct Book newBook(char title[], char author[], char summary[], char content[],
     return book;
 }
 
-double getAverageRating(struct Book b){
-    if(b.reviewCount == 0) return 0;
-    return (double)b.ratingSum/(double)b.reviewCount;
+double getAverageRating(struct Book *b){
+    if(b->reviewCount == 0) return 0;
+    return (double)b->ratingSum/(double)b->reviewCount;
 }
