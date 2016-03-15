@@ -12,6 +12,7 @@ struct BookDataStore {
 
 struct BookDataStore newBookDataStore();
 void addBookToDataStore(struct Book *b, struct BookDataStore *bookDataStore);
+void printBookDataStore(struct BookDataStore *bookDataStore);
 void removeBookFromDataStore(struct Book* b, struct BookDataStore *bookDataStore);
 struct Book** searchBooksInDataStore(bool byBookName, char name[], int count, struct BookDataStore *bookDataStore);
 #endif

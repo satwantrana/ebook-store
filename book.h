@@ -20,6 +20,7 @@ struct Book {
    int ratingSum;
 };
 
+struct Book dummyBook();
 struct Book newBook(char title[], char author[], char summary[], char content[], int writerID, int price);
 double getAverageRating(struct Book *b);
 

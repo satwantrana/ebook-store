@@ -1,6 +1,11 @@
 #include "book.h"
 #include "string.h"
 
+struct Book dummyBook(){
+    struct Book book;
+    book.id = -1;
+    return book;
+}
 struct Book newBook(char title[], char author[], char summary[], char content[], int writerID, int price){
     struct Book book;
     strcpy(book.title, title); strcpy(book.author, author);

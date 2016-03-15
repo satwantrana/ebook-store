@@ -76,6 +76,7 @@ struct Book** getBookRecommendations(struct Customer *c, int count, struct EBook
     int j;
     for(int i=0,j=0;i<c->reviewCount && j<count;i++){
         struct Book *b = eBookStore->bookDataStore.books[reviews[i]->bookID];
+        assignSimilarBooks(b, eBookStore);
         if(b->authorized) for(int k=0;k<b->similarBookCount && j<count;k++){
             struct Book *bb = eBookStore->bookDataStore.books[b->similarBooks[j]];
             if(bb->authorized) ret[j++] = bb;

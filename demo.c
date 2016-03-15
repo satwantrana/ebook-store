@@ -62,7 +62,8 @@ void doSomeStuff(){
 
     printf("Creating customer account for Robert Langdon\n");
     struct Customer robertLangdon = newCustomer("robertlangdon", "password");
-    printf("Created customer account for Robert Langdon\n\n");
+    addCustomerToDataStore(&robertLangdon, &eBookStore.customerDataStore);
+    printf("Created customer account for Robert Langdon with user id %d\n\n", robertLangdon.id);
 
     printf("Searching for books with the title 'Angels and Demons'\n");
     struct Book* searchResult = searchBooksInDataStore(1, "Angels and Demons", 1, &eBookStore.bookDataStore)[0];
